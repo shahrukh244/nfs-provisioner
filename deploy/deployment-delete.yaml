@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-client-provisioner-delete
+  namespace: default
+  labels:
+    app: nfs-client-provisioner-delete
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner-delete
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner-delete
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: nfs-delete
+            - name: NFS_SERVER
+              value: 10.0.0.100
+            - name: NFS_PATH
+              value: /var/NFS-Share/Kubernetes-Share/Kubernetes-Storage/nfs-Delete
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 10.0.0.100
+            path: /var/NFS-Share/Kubernetes-Share/Kubernetes-Storage/nfs-Delete
+
