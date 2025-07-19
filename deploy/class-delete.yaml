@@ -2,6 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: nfs-delete
+  namespace: nfs-provisioner
 provisioner: nfs-delete
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
