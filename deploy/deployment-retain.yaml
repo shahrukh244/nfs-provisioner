@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nfs-client-provisioner-retain
-  namespace: default
+  namespace: nfs-provisioner
   labels:
     app: nfs-client-provisioner-retain
 spec:
